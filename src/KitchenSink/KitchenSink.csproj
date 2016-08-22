@@ -85,6 +85,10 @@
     <Compile Include="ChartPage.json.cs">
       <DependentUpon>ChartPage.json</DependentUpon>
     </Compile>
+    <Compile Include="SortableListTestData.cs" />
+    <Compile Include="SortableListPage.json.cs">
+      <DependentUpon>SortableListPage.json</DependentUpon>
+    </Compile>
     <Compile Include="ValidationPage.json.cs">
       <DependentUpon>ValidationPage.json</DependentUpon>
     </Compile>
@@ -189,6 +193,10 @@
     <Content Include="wwwroot\KitchenSink\ButtonPage.html" />
     <Content Include="wwwroot\KitchenSink\CallbackPage.html" />
     <Content Include="wwwroot\KitchenSink\ChartPage.html" />
+    <TypedJSON Include="SortableListPage.json">
+      <Generator>MsBuild:Compile</Generator>
+    </TypedJSON>
+    <None Include="wwwroot\KitchenSink\SortableListPage.html" />
     <Content Include="wwwroot\KitchenSink\ValidationPage.html" />
     <Content Include="wwwroot\KitchenSink\ToggleButtonPage.html" />
     <Content Include="wwwroot\KitchenSink\CheckboxPage.html" />

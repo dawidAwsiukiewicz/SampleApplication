@@ -1,0 +1,54 @@
+﻿<link rel="import" href="/sys/juicy-draggable-gh-pages/juicy-draggable.html" />
+
+
+<template>
+    <template is="dom-bind">
+        <h1>Sortable list</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Order</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template is="dom-repeat" items="{{model.People}}">
+
+                    <tr>
+                        <td>{{item.Name}}</td>
+                        <td>
+                            <button disabled="{{ isFirstItem(model.People, item) }}" class="sortable-btn"> <i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            <button disabled="{{ isLastItem(model.People, item) }}" class="sortable-btn"> <i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        </template>
+
+    <script>
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            template.isFirstItem = function (items, item) {
+                if (items.indexOf(item) === 0) {
+                    return true;
+                }
+
+                return false;
+            };
+
+            template.isLastItem = function (items, item) {
+
+                if (items.indexOf(item) === items.length - 1) {
+                    return true;
+                }
+
+                return false;
+            };
+        })();
+    </script>
+
+</template>
