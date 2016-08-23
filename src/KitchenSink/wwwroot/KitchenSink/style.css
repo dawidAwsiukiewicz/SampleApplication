@@ -147,6 +147,18 @@
     border: 0;
     padding: 0;
 }
+.sortable-btn-up:after{
+    content: "\f164";
+    font-family: FontAwesome;
+    font-size: 16px;
+
+}
+.sortable-btn-down:after{
+    content: "\f165";
+    font-family: FontAwesome;
+    font-size: 16px;
+
+}
 .sortable-btn:focus{
     outline: none;
 }
@@ -158,4 +170,52 @@
 
 .sortable-btn:hover:not(:disabled){
     color: green;
+}
+
+#drag {
+    overflow: visible;
+    padding-left: 420px;
+    min-height: 60px;
+}
+.drag,
+.drag-helper {
+    width: 200px;
+    line-height: 50px;
+    float: left;
+    margin: 0px 10px 10px 0px;
+    border: 1px dashed #333333;
+    text-align: center;
+    cursor: move;
+}
+#drop {
+    clear: both;
+    border: 1px solid #333333;
+    padding: 0px;
+}
+#drop p {
+    border-bottom: 1px solid #333333;
+    padding: 10px;
+    margin: 0px;
+}
+#drop div.drop {
+    min-height: 100px;
+    padding: 10px;
+}
+#drop .drag {
+    cursor: default;
+}
+.drag-helper {
+    display: none;
+}
+.drag-helper.dragging {
+    display: block;
+}
+.drag-hover {
+    background-color: #eeffc5;
+}
+juicy-draggable.fixed .drag {
+    left: 10px;
+}
+juicy-draggable.fixed-drop .drag {
+    left: 220px;
 }

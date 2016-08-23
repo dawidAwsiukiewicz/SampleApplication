@@ -1,5 +1,5 @@
 ﻿using Starcounter;
-
+using System;
 
 namespace KitchenSink
 {
@@ -20,6 +20,11 @@ namespace KitchenSink
             Db.SlowSQL("DELETE FROM People");
         }
 
+        public static int GetLastOrderNumber()
+        {
+            return Exists() ? (int)Db.SQL<long>("SELECT max(i.Ordering) FROM People i").First : 0;
+        }
+
         public static void Create()
         {
             Db.Transact(() => {
@@ -27,10 +32,13 @@ namespace KitchenSink
 
                 foreach (string item in test_people_list)
                 {
+                    
                     var people = new People()
                     {
-                        Name = item
+                        Name = item,
+                        Ordering = GetLastOrderNumber() + 1
                     };
+
                 }
 
             });

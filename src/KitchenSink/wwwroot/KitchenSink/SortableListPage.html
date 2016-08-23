@@ -12,16 +12,15 @@
                 </tr>
             </thead>
             <tbody>
-                <template is="dom-repeat" items="{{model.People}}">
+                <template is="dom-repeat" items="{{model.People}}" as="item">
+                        <tr>
+                            <td>{{item.Name}}</td>
+                            <td>
+                                <button value="{{item.OrderingUp$::click}}" onmousedown="++this.value" disabled="{{ isFirstItem(model.People, item) }}" class="sortable-btn sortable-btn-up"></button>
+                                <button class="sortable-btn sortable-btn-down" value="{{item.OrderingDown$::click}}" disabled="{{isLastItem(model.People, item)}}" onmousedown="++this.value"></button>
 
-                    <tr>
-                        <td>{{item.Name}}</td>
-                        <td>
-                            <button disabled="{{ isFirstItem(model.People, item) }}" class="sortable-btn"> <i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-                            <button disabled="{{ isLastItem(model.People, item) }}" class="sortable-btn"> <i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
-
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                 </template>
             </tbody>
         </table>
@@ -31,6 +30,10 @@
         (function () {
             var script = document._currentScript || document.currentScript;
             var template = script.previousElementSibling;
+
+            template._computeSort = function(){
+               console.log(dupa)
+            },
 
             template.isFirstItem = function (items, item) {
                 if (items.indexOf(item) === 0) {
