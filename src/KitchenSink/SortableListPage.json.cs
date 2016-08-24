@@ -16,7 +16,7 @@ namespace KitchenSink
         protected override void OnData()
         {
             base.OnData();
-            Console.Out.WriteLine("DUPA");
+
             if (SortableListTestData.Exists())
             {
                 Db.Transact(() =>
@@ -25,16 +25,19 @@ namespace KitchenSink
                 });
             }
             SortableListTestData.Create();
-            
-            People = Db.SQL<People>("SELECT i FROM People i ORDER BY i.Ordering");
 
-           // OnChangedPosition(Db.SQL<People>("SELECT i FROM People i WHERE i.Ordering = ?", 5).First, 0);
+            ReloadList();
+
         }
 
-
+        public void ReloadList()
+        {
+            People = Db.SQL<People>("SELECT i FROM People i ORDER BY i.Ordering");
+        }
 
         protected void OnChangedPosition(People Item, int NewOrder)
         {
+            // TODO: add drag & drop on frontend
 
             if (NewOrder > Item.Ordering)
             {
@@ -66,7 +69,7 @@ namespace KitchenSink
 
     }
     [SortableListPage_json.People]
-    partial class SortableListPagePeopleElement : Json
+    partial class SortableListPagePeopleElement : Json, IBound<People>
     {
 
         void Handle(Input.OrderingUp action)
@@ -80,6 +83,9 @@ namespace KitchenSink
                     Ordering = tmp_ordering;
                 }
             });
+            SortableListPage sortableListPage = (SortableListPage)Parent.Parent;
+            sortableListPage.ReloadList();
+
         }
 
         void Handle(Input.OrderingDown action)
@@ -92,7 +98,11 @@ namespace KitchenSink
                     item.Ordering = (int)Ordering;
                     Ordering = tmp_ordering;
                 }
+
             });
+
+            SortableListPage sortableListPage = (SortableListPage)Parent.Parent;
+            sortableListPage.ReloadList();
 
         }
     }
