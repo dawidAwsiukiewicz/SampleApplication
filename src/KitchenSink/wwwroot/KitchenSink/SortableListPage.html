@@ -12,12 +12,13 @@
                 </tr>
             </thead>
             <tbody>
-                <template is="dom-repeat" items="{{model.People}}" as="item" restamp>
+                <template is="dom-repeat" items="{{model.People}}" as="item" sort="sortItem" observe="Ordering$ item.Ordering$">
                         <tr>
-                            <td>{{item.Name}}</td>
+                            <td>{{item.Name$}}</td>
                             <td>
-                                <button   value="{{item.OrderingUp$::click}}" onmousedown="++this.value" disabled="{{ isFirstItem(model.People, item) }}" class="sortable-btn sortable-btn-up"></button>
-                                <button class="sortable-btn sortable-btn-down" value="{{item.OrderingDown$::click}}" disabled="{{isLastItem(model.People, item)}}" onmousedown="++this.value"></button>
+
+                                <button value="{{item.OrderingUp$::click}}" onmousedown="++this.value" disabled$="{{ isFirstItem(index,item) }}" class="sortable-btn sortable-btn-up"></button>
+                                <button value="{{item.OrderingDown$::click}}" onmousedown="++this.value" disabled="{{isLastItem(index,item)}}" class="sortable-btn sortable-btn-down"></button>
 
                             </td>
                         </tr>
@@ -31,18 +32,29 @@
             var script = document._currentScript || document.currentScript;
             var template = script.previousElementSibling;
 
+            
+            template.sortItem = function (a, b) {
+                if (a['Ordering$'] > b['Ordering$']) {
+                    return 1;
+                }else if ( a['Ordering$'] < b ['Ordering$']){
+                    return -1;
+                }
+                return 0;
+            }
 
-            template.isFirstItem = function (items, item) {
-                if (items.indexOf(item) === 0) {
+
+
+            template.isFirstItem = function (index, item) {
+                if (index === 0) {
                     return true;
                 }
 
                 return false;
             };
 
-            template.isLastItem = function (items, item) {
-
-                if (items.indexOf(item) === items.length - 1) {
+            template.isLastItem = function (index, item) {
+       
+                if (index === template.model.People.length - 1) {
                     return true;
                 }
 

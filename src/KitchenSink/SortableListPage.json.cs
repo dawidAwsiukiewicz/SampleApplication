@@ -27,7 +27,6 @@ namespace KitchenSink
             SortableListTestData.Create();
 
             ReloadList();
-
         }
 
         public void ReloadList()
@@ -83,8 +82,6 @@ namespace KitchenSink
                     Ordering = tmp_ordering;
                 }
             });
-            SortableListPage sortableListPage = (SortableListPage)Parent.Parent;
-            sortableListPage.ReloadList();
 
         }
 
@@ -101,8 +98,6 @@ namespace KitchenSink
 
             });
 
-            SortableListPage sortableListPage = (SortableListPage)Parent.Parent;
-            sortableListPage.ReloadList();
 
         }
     }
