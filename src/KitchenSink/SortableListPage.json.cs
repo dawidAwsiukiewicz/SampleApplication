@@ -17,14 +17,11 @@ namespace KitchenSink
         {
             base.OnData();
 
-            if (SortableListTestData.Exists())
+            if (!SortableListTestData.Exists())
             {
-                Db.Transact(() =>
-                {
-                    SortableListTestData.DeleteAll();
-                });
+                SortableListTestData.Create();
             }
-            SortableListTestData.Create();
+            
 
             ReloadList();
         }
@@ -32,37 +29,6 @@ namespace KitchenSink
         public void ReloadList()
         {
             People = Db.SQL<People>("SELECT i FROM People i ORDER BY i.Ordering");
-        }
-
-        protected void OnChangedPosition(People Item, int NewOrder)
-        {
-            // TODO: add drag & drop on frontend
-
-            if (NewOrder > Item.Ordering)
-            {
-                Db.Transact(delegate
-                {
-                    foreach (People item in Db.SQL<People>("SELECT i FROM People i WHERE i.Ordering <= ? AND i.Ordering > ?", NewOrder, Item.Ordering))
-                    {
-                        item.Ordering = item.Ordering - 1;
-                    }
-                });
-            }
-            else if (NewOrder < Item.Ordering)
-            {
-                Db.Transact(delegate
-                {
-                    foreach (People item in Db.SQL<People>("SELECT i FROM People i WHERE i.Ordering >= ? AND i.Ordering < ?", NewOrder, Item.Ordering))
-                    {
-                        item.Ordering = item.Ordering + 1;
-                    }
-                });
-            }
-            Db.Transact(delegate
-            {
-                Item.Ordering = NewOrder;
-            });
-         
         }
 
 

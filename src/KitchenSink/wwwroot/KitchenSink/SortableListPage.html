@@ -1,6 +1,4 @@
-﻿<link rel="import" href="/sys/juicy-draggable-gh-pages/juicy-draggable.html" />
-
-
+﻿
 <template>
     <template is="dom-bind">
         <h1>Sortable list</h1>
@@ -16,22 +14,19 @@
                         <tr>
                             <td>{{item.Name$}}</td>
                             <td>
-
-                                <button value="{{item.OrderingUp$::click}}" onmousedown="++this.value" disabled$="{{ isFirstItem(index,item) }}" class="sortable-btn sortable-btn-up"></button>
-                                <button value="{{item.OrderingDown$::click}}" onmousedown="++this.value" disabled="{{isLastItem(index,item)}}" class="sortable-btn sortable-btn-down"></button>
-
+                                <i value="{{item.OrderingUp$::click}}" onmousedown="++this.value" disabled$="{{ isFirstItem(index,item) }}" class="kitchensink-sortablelist__sortable-button fa fa-thumbs-up"></i>
+                                <i value="{{item.OrderingDown$::click}}" onmousedown="++this.value" disabled$="{{isLastItem(index,item)}}" class="kitchensink-sortablelist__sortable-button fa fa-thumbs-down"></i>
                             </td>
                         </tr>
                 </template>
             </tbody>
         </table>
-        </template>
+    </template>
 
     <script>
         (function () {
             var script = document._currentScript || document.currentScript;
             var template = script.previousElementSibling;
-
             
             template.sortItem = function (a, b) {
                 if (a['Ordering$'] > b['Ordering$']) {
@@ -41,8 +36,6 @@
                 }
                 return 0;
             }
-
-
 
             template.isFirstItem = function (index, item) {
                 if (index === 0) {
